@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 setup(
     name='Grow-A-Plant',
     version='0.1.0',
-    packages=find_packages(where='code'),
-    package_dir={'': 'code'},  
+    packages=find_packages(where='flowerLibrary'),
+    package_dir={'': 'flowerLibrary'},
     url='https://github.com/layne4fame/Grow-A-Plant',
     license='',  # Specify a license if applicable
     author='Layne Webb, Tegan Wall, Jake Parra',

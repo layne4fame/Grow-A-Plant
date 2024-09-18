@@ -8,10 +8,16 @@ import adafruit_dht
 import psutil
 from gpiozero import LightSensor
 
-for proc in psutil.process_iter():
-    if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
-        proc.kill()
-sensor = adafruit_dht.DHT11(board.D21)
+# How long program will run in seconds
+timeFrame = 360
+# Flag to dictate if program will run with DHT sensor or random values
+flag = False
+
+if flag:
+    for proc in psutil.process_iter():
+        if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
+            proc.kill()
+    sensor = adafruit_dht.DHT11(board.D21)
 
 def getTemp():
     untilT = True
@@ -74,8 +80,7 @@ def main():
     flowerLibrary.background.drawGround()
     flowerLibrary.flower.drawstem()
     flowerLibrary.background.theCategories()
-    
-    
+
     count = 0
     arr = [60, 70]
     plantBasic = flowerLibrary.plant.plant(name, 50, arr)
@@ -101,12 +106,16 @@ def main():
     
     d = flowerLibrary.drawing.drawer()
     
-    while count <= 360:
+    while count <= timeFrame:
+
       if count % 30 == 0 and count != 0:
         d.drawLeaf(plantBasic.baseHappy)
       count = count + 1
-      temp = (int(getTemp() or 0) * 9/5) + 32
-      isLight = l.light_detected
+
+      if(flag):
+        temp = (int(getTemp() or 0) * 9/5) + 32
+        isLight = l.light_detected
+
       plantBasic.calculateLightLevel(isLight, count)
       plantBasic.calculateHappy(temp)
       print("Light level:", l.value)
