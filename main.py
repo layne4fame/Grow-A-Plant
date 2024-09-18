@@ -3,21 +3,30 @@ import time
 import random
 import turtle
 from turtle import Turtle
-import board
-import adafruit_dht
 import psutil
-from gpiozero import LightSensor
 
-# How long program will run in seconds
+# How long program will run in seconds. Default to 360 for testing parameters.
+# Ensure this parameter is divisible by 12 as that is how many leaves will be drawn per simulation.
 timeFrame = 360
+
 # Flag to dictate if program will run with DHT sensor or random values
 flag = False
 
+# Options for simulated values
+lightWeights = [.7, .3]  # [True, False]
+numberRange = [50, 70]  # Picks a random inclusive value from this range
+
 if flag:
-    for proc in psutil.process_iter():
-        if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
-            proc.kill()
-    sensor = adafruit_dht.DHT11(board.D21)
+    try:
+        import board
+        import adafruit_dht
+        from gpiozero import LightSensor
+        for proc in psutil.process_iter():
+            if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
+                proc.kill()
+                sensor = adafruit_dht.DHT11(board.D21)
+    except ValueError:
+        print("Error: Please enter valid integers.")
 
 def getTemp():
     untilT = True
@@ -69,8 +78,9 @@ def drawCurrentHappy(t, current):
     t.write(str(current), font=("arial", 15, "bold"))
 
 def main():
-    
-    l = LightSensor(26)
+
+    if flag:
+        l = LightSensor(26)
     screen = turtle.Screen()
     flowerLibrary.welcome.weclomeScreen()
     
@@ -112,9 +122,14 @@ def main():
         d.drawLeaf(plantBasic.baseHappy)
       count = count + 1
 
-      if(flag):
+      if flag:
+        # Does a Celsius to Fahrenheit conversion
         temp = (int(getTemp() or 0) * 9/5) + 32
         isLight = l.light_detected
+
+      else:
+        isLight = random_bool = random.choices([True, False], weights=lightWeights)[0]
+        random_int = random.randint(numberRange[0], numberRange[1])
 
       plantBasic.calculateLightLevel(isLight, count)
       plantBasic.calculateHappy(temp)
