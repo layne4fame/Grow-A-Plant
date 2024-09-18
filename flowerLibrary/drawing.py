@@ -1,10 +1,7 @@
-import flowerBad
-import flowerGood
-import flower
-import sys
-import turtle
-import leaves
-import background
+from flowerLibrary.flowerBad import *
+from flowerLibrary.flowerGood import *
+from flowerLibrary.flower import *
+from flowerLibrary.leaves import *
 
 class drawer:
     def __init__(self):
@@ -14,33 +11,33 @@ class drawer:
 
     def finish(self, happy):    
         if self.overall < 6:
-            flowerBad.drawpetalsBAD()
-            flowerBad.drawMiddleBAD()
+            drawpetalsBAD()
+            drawMiddleBAD()
         elif self.overall < 9:
-            flower.drawpetals()
-            flower.drawMiddle()
+            drawpetals()
+            drawMiddle()
         else:
-            flowerGood.drawpetalsGOOD()
-            flowerGood.drawMiddleGOOD()
+            drawpetalsGOOD()
+            drawMiddleGOOD()
 
     def drawLeaf(self, happy):
         if happy < 50:
             if self.iteration % 2 == 0:
-                leaves.drawleafSadRIGHT(10, self.baseHeight)
+                drawleafSadRIGHT(10, self.baseHeight)
             else:
-                leaves.drawleafSadLEFT(0, self.baseHeight)
+                drawleafSadLEFT(0, self.baseHeight)
         elif happy < 75:
             self.overall = self.overall + .5
             if self.iteration % 2 == 0:
-                leaves.drawleafNeutralRIGHT(10, self.baseHeight)
+                drawleafNeutralRIGHT(10, self.baseHeight)
             else:
-                leaves.drawleafNeutralLEFT(0, self.baseHeight)
+                drawleafNeutralLEFT(0, self.baseHeight)
         else:
             self.overall = self.overall + 1
             if self.iteration % 2 == 0:
-                leaves.drawleafHappyRIGHT(10, self.baseHeight)
+                drawleafHappyRIGHT(10, self.baseHeight)
             else:
-                leaves.drawleafHappyLEFT(0, self.baseHeight)
+                drawleafHappyLEFT(0, self.baseHeight)
         if self.iteration % 2 == 1:
             self.baseHeight = self.baseHeight + 25
         self.iteration = self.iteration + 1

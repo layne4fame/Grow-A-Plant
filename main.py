@@ -82,18 +82,18 @@ def main():
     if flag:
         l = LightSensor(26)
     screen = turtle.Screen()
-    flowerLibrary.welcome.weclomeScreen()
+    flowerLibrary.welcomeScreen()
     
-    name = flowerLibrary.welcome.get_name()
+    name = flowerLibrary.get_name()
     
-    flowerLibrary.background.drawOverBackground("LightBlue")
-    flowerLibrary.background.drawGround()
-    flowerLibrary.flower.drawstem()
-    flowerLibrary.background.theCategories()
+    flowerLibrary.drawOverBackground("LightBlue")
+    flowerLibrary.drawGround()
+    flowerLibrary.drawstem()
+    flowerLibrary.theCategories()
 
     count = 0
     arr = [60, 70]
-    plantBasic = flowerLibrary.plant.plant(name, 50, arr)
+    plantBasic = flowerLibrary.plant(name, 50, arr)
     
     turtle.hideturtle()
     turtle.penup()
@@ -114,7 +114,7 @@ def main():
     turtleLight.penup()
     turtleHappy.penup()
     
-    d = flowerLibrary.drawing.drawer()
+    d = flowerLibrary.drawer()
     
     while count <= timeFrame:
 
@@ -129,13 +129,17 @@ def main():
 
       else:
         isLight = random_bool = random.choices([True, False], weights=lightWeights)[0]
-        random_int = random.randint(numberRange[0], numberRange[1])
+        temp = random.randint(numberRange[0], numberRange[1])
 
       plantBasic.calculateLightLevel(isLight, count)
       plantBasic.calculateHappy(temp)
-      print("Light level:", l.value)
+      if(flag):
+        print("Light level:", l.value)
       print("Temperature:", temp)
-      print("Light: ", l.light_detected)
+      if(flag):
+        print("Light: ", l.light_detected)
+      else:
+          print("Light: ", isLight)
       print("Happy level: ", plantBasic.baseHappy)
       print("Iteration: ", count)
       drawTemper(turtleTemp, temp)
