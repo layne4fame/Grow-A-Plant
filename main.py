@@ -9,6 +9,11 @@ import psutil
 # Ensure this parameter is divisible by 12 as that is how many leaves will be drawn per simulation.
 timeFrame = 360
 
+# This determines the range of values that qualify as "good" for the plant.
+# Starting value is how happy the plant is when it starts
+goodRange = [60, 70]
+startingValue = 50
+
 # Flag to dictate if program will run with DHT sensor or random values
 flag = False
 
@@ -91,13 +96,11 @@ def main():
     flowerLibrary.drawstem()
     flowerLibrary.theCategories()
 
-    count = 0
-    arr = [60, 70]
-    plantBasic = flowerLibrary.plant(name, 50, arr)
+    plantBasic = flowerLibrary.plant(name, startingValue, goodRange)
     
     turtle.hideturtle()
     turtle.penup()
-    turtle.goto(8, 280)
+    turtle.goto(8, 260)
     turtle.write(plantBasic.name, align="center", font=("arial",40,"bold"))
     
     turtleDisplay = Turtle(visible=False)
@@ -115,7 +118,8 @@ def main():
     turtleHappy.penup()
     
     d = flowerLibrary.drawer()
-    
+    count = 0
+
     while count <= timeFrame:
 
       if count % 30 == 0 and count != 0:
