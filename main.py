@@ -7,7 +7,9 @@ import psutil
 
 # How long program will run in seconds. Default to 360 for testing parameters.
 # Ensure this parameter is divisible by 12 as that is how many leaves will be drawn per simulation.
-timeFrame = 360
+timeFrame = 12
+if timeFrame % 12 != 0:
+    raise Exception("Timeframe of simulation must be divisible by 12")
 
 # This determines the range of values that qualify as "good" for the plant.
 # Starting value is how happy the plant is when it starts
@@ -82,6 +84,9 @@ def drawCurrentHappy(t, current):
     t.sety(-30) 
     t.write(str(current), font=("arial", 15, "bold"))
 
+def exit_Program():
+    exit(0)
+
 def main():
 
     if flag:
@@ -122,7 +127,7 @@ def main():
 
     while count <= timeFrame:
 
-      if count % 30 == 0 and count != 0:
+      if count % (timeFrame/12) == 0 and count != 0:
         d.drawLeaf(plantBasic.baseHappy)
       count = count + 1
 
@@ -151,6 +156,10 @@ def main():
       drawCurrentHappy(turtleHappy, plantBasic.baseHappy)
       time.sleep(1)
     d.finish(plantBasic.baseHappy)
+
+    # Wait for user to manually exit
+    while True:
+        screen.onkey(exit_Program, "Escape")
 
 
 if __name__ == "__main__":
