@@ -2,7 +2,7 @@
 from turtle import *
 import turtle
 import time
-import background
+from flowerLibrary.background import *
 
 
 
@@ -14,8 +14,8 @@ def get_name():
 def writeTheRules():
     return 0
 
-def weclomeScreen():
-    background.drawOverBackground("black")
+def welcomeScreen():
+    drawOverBackground("black")
     tegan = turtle.Turtle()
     tegan.hideturtle()
     tegan.fillcolor("white")
@@ -24,10 +24,10 @@ def weclomeScreen():
     tegan.penup()
     tegan.goto(-300, 0)
     tegan.pendown()
-    arg = "Welcome to Plant Time!"
+    arg = "Welcome to Grow-A-Plant!"
     tegan.write(arg, move=False, align='left', font=('Georgia',30,'bold'))
     time.sleep(5)
-    background.drawOverBackground("black")
+    drawOverBackground("black")
     
     tegan.penup()
     tegan.goto(-10, 220)
@@ -68,14 +68,14 @@ def weclomeScreen():
     tegan.penup()
     tegan.goto(-400, -100)
     tegan.pendown()
-    arg = "5) Once done the petals will show final results."
+    arg = "5) Once done, the petals will show final results."
     tegan.write(arg, move=False, align='left', font=('Georgia',20,'bold'))
     
     time.sleep(10)
 
 
 def startButton(x, y):
-    #-250 = x and y = -200
+
     pen = turtle.Turtle()
     pen.hideturtle()
     pen.color("red")
